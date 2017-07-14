@@ -1,7 +1,8 @@
 cadvisor:
   image: google/cadvisor
+  privileged: true
   ports:
-    - 8080:8080
+    - 18080:8080
   volumes:
     - /:/rootfs:ro
     - /var/run:/var/run:rw
@@ -11,12 +12,12 @@ cadvisor:
 metrics-gateway:
   image: prom/pushgateway
   ports:
-    - 9091:9091
+    - 19091:9091
 
 prometheus-server:
   image: prom/prometheus
   ports:
-    - 9090:9090
+    - 19090:9090
   links:
     - cadvisor:cadvisor
     - metrics-gateway:metrics-gateway
@@ -26,7 +27,7 @@ prometheus-server:
 grafana-ui:
   image: grafana/grafana
   ports:
-    - 3000:3000
+    - 13000:3000
   environment:
     - GF_SECURITY_ADMIN_PASSWORD=secret
   links:
